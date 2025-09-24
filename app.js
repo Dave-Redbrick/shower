@@ -3,25 +3,25 @@ if (import.meta.env.DEV) {
 	function applyGlobalSettings(settings) {
 		if (!settings) return;
 
-		const showerElement = document.querySelector('.shower');
-		let fontFamily = '';
+		const showerElement = document.querySelector(".shower");
+		let fontFamily = "";
 
 		// Handle the consolidated 'font' property
 		if (settings.font) {
-			const isUrl = settings.font.startsWith('http');
+			const isUrl = settings.font.startsWith("http");
 			if (isUrl) {
 				// It's a URL, so create a <link> tag
-				const link = document.createElement('link');
-				link.rel = 'stylesheet';
+				const link = document.createElement("link");
+				link.rel = "stylesheet";
 				link.href = settings.font;
 				document.head.appendChild(link);
 
 				// Try to parse the font family name from the URL (works for Google Fonts)
 				try {
 					const url = new URL(settings.font);
-					const family = url.searchParams.get('family');
+					const family = url.searchParams.get("family");
 					if (family) {
-						fontFamily = `"${family.split(':')[0]}", sans-serif`; // Use the first family name
+						fontFamily = `"${family.split(":")[0]}", sans-serif`; // Use the first family name
 					}
 				} catch (e) {
 					console.error("Could not parse font family from URL:", e);
@@ -34,12 +34,15 @@ if (import.meta.env.DEV) {
 
 		// Apply slide ratio
 		if (settings.ratio && showerElement) {
-			showerElement.style.setProperty('--slide-ratio', `calc(${settings.ratio})`);
+			showerElement.style.setProperty(
+				"--slide-ratio",
+				`calc(${settings.ratio})`
+			);
 		}
 
 		// Apply styles via a <style> tag
-		const style = document.createElement('style');
-		let customStyles = '';
+		const style = document.createElement("style");
+		let customStyles = "";
 
 		if (fontFamily) {
 			customStyles += `
@@ -50,8 +53,12 @@ if (import.meta.env.DEV) {
 		}
 
 		if (settings.background) {
-			const isUrl = settings.background.startsWith('http') || settings.background.startsWith('/');
-			const backgroundValue = isUrl ? `url('${settings.background}')` : settings.background;
+			const isUrl =
+				settings.background.startsWith("http") ||
+				settings.background.startsWith("/");
+			const backgroundValue = isUrl
+				? `url('${settings.background}')`
+				: settings.background;
 			customStyles += `
 				.shower .slide {
 					background: ${backgroundValue};
