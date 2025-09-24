@@ -1,5 +1,56 @@
 // Development mode - dynamic loading
 if (import.meta.env.DEV) {
+	function applyGlobalSettings(settings) {
+		if (!settings) return;
+
+		// Handle font URL from a provider like Google Fonts
+		if (settings.fontUrl) {
+			const link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.href = settings.fontUrl;
+			document.head.appendChild(link);
+		}
+
+		const showerElement = document.querySelector('.shower');
+
+		// Apply slide ratio
+		if (settings.ratio && showerElement) {
+			showerElement.style.setProperty('--slide-ratio', `calc(${settings.ratio})`);
+		}
+
+		// Apply font face and background
+		const style = document.createElement('style');
+		let customStyles = '';
+
+		if (settings.fontFace) {
+			customStyles += `
+				body {
+					font-family: ${settings.fontFace};
+				}
+			`;
+		}
+
+		if (settings.background) {
+			// Check if the background is a URL or a color
+			const isUrl = settings.background.startsWith('http') || settings.background.startsWith('/');
+			const backgroundValue = isUrl
+				? `url('${settings.background}')`
+				: settings.background;
+
+			customStyles += `
+				.shower .slide {
+					background: ${backgroundValue};
+					background-size: cover;
+				}
+			`;
+		}
+
+		if (customStyles) {
+			style.textContent = customStyles;
+			document.head.appendChild(style);
+		}
+	}
+
 	async function main() {
 		try {
 			const response = await fetch("presentation.json");
@@ -7,6 +58,9 @@ if (import.meta.env.DEV) {
 				throw new Error(`HTTP error! status: ${response.status}`);
 			}
 			const presentation = await response.json();
+
+			// Apply global settings from presentation.json
+			applyGlobalSettings(presentation.globalSettings);
 
 			document.title = presentation.title;
 			const header = document.querySelector("header.caption h1");
