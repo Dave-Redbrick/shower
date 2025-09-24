@@ -1,0 +1,25 @@
+{
+	"title": "My Awesome Presentation",
+	"slides": [
+		{
+			"type": "title",
+			"data": {
+				"title": "Welcome to my Presentation!"
+			}
+		},
+		{
+			"type": "title_and_content",
+			"data": {
+				"title": "About this presentation",
+				"content": "<p>This presentation is dynamically generated from a JSON file.</p>"
+			}
+		},
+		{
+			"type": "title_and_content",
+			"data": {
+				"title": "How it works",
+				"content": "<ul><li>A JSON file defines the slides.</li><li>JavaScript modules act as templates.</li><li>A main script fetches the JSON and renders the HTML.</li></ul>"
+			}
+		}
+	]
+}
