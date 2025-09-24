@@ -2,31 +2,13 @@
 	"name": "@shower/shower",
 	"description": "Shower HTML presentation engine",
 	"version": "3.3.1",
+	"type": "module",
 	"author": {
 		"name": "Vadim Makeev",
 		"email": "hi@pepelsbey.dev",
 		"url": "https://pepelsbey.dev"
 	},
-	"homepage": "https://github.com/shower/shower",
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/shower/shower.git"
-	},
-	"bugs": {
-		"url": "https://github.com/shower/shower/issues"
-	},
 	"license": "MIT",
-	"keywords": [
-		"shower",
-		"presentation",
-		"template"
-	],
-	"files": [
-		"pictures/**",
-		"index.html",
-		"LICENSE.md",
-		"README.md"
-	],
 	"engines": {
 		"node": "20"
 	},
@@ -37,14 +19,14 @@
 	},
 	"devDependencies": {
 		"@shower/cli": "^0.3.1",
-		"path-exists-cli": "^2.0.0"
+		"path-exists-cli": "^2.0.0",
+		"vite": "^4.3.9"
 	},
 	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview",
 		"pdf": "shower pdf",
-		"start": "shower serve",
-		"bundle": "shower bundle --files '**' --files '!{docs,node_modules,bundled}{,/**}' --files '!*.{md,toml,json}'",
-		"archive": "shower archive --files '**' --files '!{docs,node_modules,bundled}{,/**}' --files '!*.{md,toml,json}'",
-		"publish": "shower publish --files '**' --files '!{docs,node_modules,bundled}{,/**}' --files '!*.{md,toml,json}'",
-		"test": "npm run bundle && ls bundled && npm run archive && path-exists presentation.zip"
+		"start": "shower serve"
 	}
 }
