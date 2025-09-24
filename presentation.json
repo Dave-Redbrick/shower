@@ -9,43 +9,46 @@
 		{
 			"type": "title",
 			"data": {
-				"title": "Welcome to my Presentation!"
+				"title": "제목을 추가하려면 클릭하십시오.",
+				"subtitle": "부제목을 입력하십시오"
 			}
 		},
 		{
 			"type": "title_and_content",
 			"data": {
-				"title": "About this presentation",
-				"content": "This presentation is dynamically generated from a JSON file. It now supports **Markdown**!\n\n* Point 1\n* Point 2\n* Point 3"
+				"title": "제목을 추가하려면 클릭하십시오.",
+				"content": "* 텍스트를 입력하십시오"
 			}
 		},
 		{
 			"type": "section_header",
 			"data": {
-				"title": "Section Header",
-				"subtitle": "This is a section header slide."
+				"title": "제목을 추가하려면 클릭하십시오.",
+				"subtitle": "텍스트를 입력하십시오"
+			}
+		},
+		{
+			"type": "two_content",
+			"data": {
+				"title": "제목을 추가하려면 클릭하십시오.",
+				"content1": "* 텍스트를 입력하십시오",
+				"content2": "* 텍스트를 입력하십시오"
+			}
+		},
+		{
+			"type": "comparison",
+			"data": {
+				"title": "제목을 추가하려면 클릭하십시오.",
+				"subtitle1": "텍스트를 입력하십시오",
+				"content1": "* 텍스트를 입력하십시오",
+				"subtitle2": "텍스트를 입력하십시오",
+				"content2": "* 텍스트를 입력하십시오"
 			}
 		},
 		{
 			"type": "title_only",
 			"data": {
 				"title": "Title Only"
-			}
-		},
-		{
-			"type": "two_content",
-			"data": {
-				"title": "Two Content",
-				"content1": "This is the first column. You can use ~~strikethrough~~.",
-				"content2": "This is the second column. You can use _italics_."
-			}
-		},
-		{
-			"type": "comparison",
-			"data": {
-				"title": "Comparison",
-				"content1": "### Feature A\n- Detail 1\n- Detail 2",
-				"content2": "### Feature B\n- Detail 1\n- Detail 2"
 			}
 		},
 		{
