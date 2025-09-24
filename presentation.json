@@ -1,5 +1,10 @@
 {
 	"title": "My Awesome Presentation",
+	"globalSettings": {
+		"ratio": "16/9",
+		"font": "https://fonts.googleapis.com/css2?family=Roboto&display=swap",
+		"background": "#F5F5F5"
+	},
 	"slides": [
 		{
 			"type": "title",
@@ -11,15 +16,58 @@
 			"type": "title_and_content",
 			"data": {
 				"title": "About this presentation",
-				"content": "<p>This presentation is dynamically generated from a JSON file.</p>"
+				"content": "This presentation is dynamically generated from a JSON file. It now supports **Markdown**!\n\n* Point 1\n* Point 2\n* Point 3"
 			}
 		},
 		{
-			"type": "title_and_content",
+			"type": "section_header",
 			"data": {
-				"title": "How it works",
-				"content": "<ul><li>A JSON file defines the slides.</li><li>JavaScript modules act as templates.</li><li>A main script fetches the JSON and renders the HTML.</li></ul>"
+				"title": "Section Header",
+				"subtitle": "This is a section header slide."
 			}
+		},
+		{
+			"type": "title_only",
+			"data": {
+				"title": "Title Only"
+			}
+		},
+		{
+			"type": "two_content",
+			"data": {
+				"title": "Two Content",
+				"content1": "This is the first column. You can use ~~strikethrough~~.",
+				"content2": "This is the second column. You can use _italics_."
+			}
+		},
+		{
+			"type": "comparison",
+			"data": {
+				"title": "Comparison",
+				"content1": "### Feature A\n- Detail 1\n- Detail 2",
+				"content2": "### Feature B\n- Detail 1\n- Detail 2"
+			}
+		},
+		{
+			"type": "content_with_caption",
+			"data": {
+				"title": "Content with Caption",
+				"caption": "This is the caption.",
+				"content": "This is the main content area, where you can write more detailed text."
+			}
+		},
+		{
+			"type": "picture_with_caption",
+			"data": {
+				"title": "Picture with Caption",
+				"caption": "This is the caption for the picture.",
+				"imageUrl": "docs/images/ribbon-canvas.png",
+				"altText": "A canvas with a ribbon"
+			}
+		},
+		{
+			"type": "blank",
+			"data": {}
 		}
 	]
 }
