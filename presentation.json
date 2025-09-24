@@ -2,8 +2,7 @@
 	"title": "My Awesome Presentation",
 	"globalSettings": {
 		"ratio": "16/9",
-		"fontFace": "'Roboto', sans-serif",
-		"fontUrl": "https://fonts.googleapis.com/css2?family=Roboto&display=swap",
+		"font": "https://fonts.googleapis.com/css2?family=Roboto&display=swap",
 		"background": "#F5F5F5"
 	},
 	"slides": [
