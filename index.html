@@ -26,9 +26,20 @@
 			.slide p {
 				margin-bottom: 0px;
 			}
+			#print-button {
+				display: none;
+				position: fixed;
+				top: 10px;
+				left: 10px;
+				z-index: 1000;
+			}
+			body.list #print-button {
+				display: block;
+			}
 		</style>
 	</head>
 	<body class="shower list">
+		<button id="print-button">Print to PDF</button>
 		<header class="caption">
 			<h1></h1>
 			<p></p>
