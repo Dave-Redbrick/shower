@@ -1,8 +1,8 @@
 import { marked } from "marked";
 
-export default function createPictureWithCaptionSlide(data) {
+export default function createPictureWithCaptionSlide(data, slideId) {
 	return `
-    <section class="slide" id="picture-with-caption-slide">
+    <section class="slide picture-with-caption-slide" id="${slideId}">
       <div class="pwc-slide-container">
         <div class="pwc-slide-caption-container">
           <div class="pwc-slide-title-box">
@@ -19,7 +19,7 @@ export default function createPictureWithCaptionSlide(data) {
         </div>
       </div>
       <style>
-        #picture-with-caption-slide {
+        .picture-with-caption-slide {
           display: flex;
           align-items: center;
           justify-content: flex-start;

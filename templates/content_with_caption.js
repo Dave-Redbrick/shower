@@ -1,8 +1,8 @@
 import { marked } from "marked";
 
-export default function createContentWithCaptionSlide(data) {
+export default function createContentWithCaptionSlide(data, slideId) {
 	return `
-    <section class="slide" id="content-with-caption-slide">
+    <section class="slide content-with-caption-slide" id="${slideId}">
       <div class="cwc-slide-container">
         <div class="cwc-slide-caption-container">
           <div class="cwc-slide-title-box">
@@ -19,7 +19,7 @@ export default function createContentWithCaptionSlide(data) {
         </div>
       </div>
       <style>
-        #content-with-caption-slide {
+        .content-with-caption-slide {
           display: flex;
           align-items: center;
           justify-content: start;

@@ -1,8 +1,8 @@
 import { marked } from "marked";
 
-export default function createComparisonSlide(data) {
+export default function createComparisonSlide(data, slideId) {
 	return `
-    <section class="slide" id="comparison-slide">
+    <section class="slide comparison-slide" id="${slideId}">
       <div class="c-slide-container">
         <div class="c-slide-title-box">
           ${marked.parseInline(data.title)}
@@ -27,7 +27,7 @@ export default function createComparisonSlide(data) {
         </div>
       </div>
       <style>
-        #comparison-slide {
+        .comparison-slide {
           display: flex;
           align-items: center;
           justify-content: center;

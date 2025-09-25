@@ -1,5 +1,5 @@
-export default function createBlankSlide() {
+export default function createBlankSlide(data, slideId) {
   return `
-    <section class="slide"></section>
+    <section class="slide" id="${slideId}"></section>
   `;
 }

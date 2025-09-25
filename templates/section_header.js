@@ -1,8 +1,8 @@
 import { marked } from "marked";
 
-export default function createSectionHeaderSlide(data) {
+export default function createSectionHeaderSlide(data, slideId) {
 	return `
-    <section class="slide" id="section-header-slide">
+    <section class="slide section-header-slide" id="${slideId}">
       <div class="sh-slide-container">
         <div class="sh-slide-title-box">
           ${marked.parse(data.title)}
@@ -12,7 +12,7 @@ export default function createSectionHeaderSlide(data) {
         </div>
       </div>
       <style>
-        #section-header-slide {
+        .section-header-slide {
           display: flex;
           align-items: center;
           justify-content: center;

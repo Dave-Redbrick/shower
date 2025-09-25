@@ -1,8 +1,8 @@
 import { marked } from "marked";
 
-export default function createTwoContentSlide(data) {
+export default function createTwoContentSlide(data, slideId) {
 	return `
-    <section class="slide" id="two-content-slide">
+    <section class="slide two-content-slide" id="${slideId}">
       <div class="tc-slide-container">
         <div class="tc-slide-title-box">${marked.parse(data.title)}</div>
         <div class="tc-slide-content-container">
@@ -15,7 +15,7 @@ export default function createTwoContentSlide(data) {
         </div>
       </div>
       <style>
-        #two-content-slide {
+        .two-content-slide {
           display: flex;
           align-items: center;
           justify-content: center;
