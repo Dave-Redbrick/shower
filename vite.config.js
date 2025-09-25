@@ -14,6 +14,7 @@ export default defineConfig({
 			input: {
 				main: "index.html",
 			},
+			external: ["/shower.js"],
 		},
 	},
 	plugins: [
@@ -33,9 +34,51 @@ export default defineConfig({
 							readFileSync("presentation.json", "utf-8")
 						);
 
-						// Generate slides HTML
+						// Generate slides HTML and collect styles
 						let slidesHtml = "";
-						for (const slide of presentationData.slides) {
+						let fontLinks = new Set();
+						let globalStyles = "";
+
+						// Handle global settings
+						if (presentationData.globalSettings) {
+							const settings = presentationData.globalSettings;
+							if (settings.font) {
+								if (settings.font.startsWith("http")) {
+									fontLinks.add(settings.font);
+									try {
+										const url = new URL(settings.font);
+										const family =
+											url.searchParams.get("family");
+										if (family) {
+											globalStyles += `.shower, .shower * { font-family: "${
+												family.split(":")[0]
+											}", sans-serif !important; }`;
+										}
+									} catch (e) {
+										console.error(
+											"Could not parse font family from URL:",
+											e
+										);
+									}
+								} else {
+									globalStyles += `.shower, .shower * { font-family: ${settings.font} !important; }`;
+								}
+							}
+							if (settings.background) {
+								const isUrl =
+									settings.background.startsWith("http") ||
+									settings.background.startsWith("/");
+								const backgroundValue = isUrl
+									? `url('${settings.background}')`
+									: settings.background;
+								globalStyles += `.shower .slide { background: ${backgroundValue} !important; background-size: cover !important; }`;
+							}
+							if (settings.ratio) {
+								globalStyles += `.shower { --slide-ratio: calc(${settings.ratio}); }`;
+							}
+						}
+
+						for (const [index, slide] of presentationData.slides.entries()) {
 							try {
 								const templatePath = resolve(
 									`templates/${slide.type}.js`
@@ -44,7 +87,51 @@ export default defineConfig({
 									`file://${templatePath}`
 								);
 								const createSlide = templateModule.default;
-								slidesHtml += createSlide(slide.data);
+								const slideId = `${index + 1}`;
+
+								// Handle slide-specific styles
+								let slideStyles = "";
+								if (slide.font) {
+									if (slide.font.startsWith("http")) {
+										fontLinks.add(slide.font);
+										try {
+											const url = new URL(slide.font);
+											const family =
+												url.searchParams.get("family");
+											if (family) {
+												slideStyles += `font-family: '${
+													family.split(":")[0]
+												}', sans-serif;`;
+											}
+										} catch (e) {
+											console.error(
+												"Could not parse font family from URL:",
+												e
+											);
+										}
+									} else {
+										slideStyles += `font-family: ${slide.font};`;
+									}
+								}
+								if (slide.background) {
+									const isUrl =
+										slide.background.startsWith("http") ||
+										slide.background.startsWith("/");
+									const backgroundValue = isUrl
+										? `url('${slide.background}')`
+										: slide.background;
+									slideStyles += `background: ${backgroundValue}; background-size: cover;`;
+								}
+
+								// Pass styles to the createSlide function or add them to the section tag
+								let slideHtml = createSlide(slide.data, slideId);
+								if (slideStyles) {
+									slideHtml = slideHtml.replace(
+										/(<section\s+class="slide[^"]*")/,
+										`$1 style="${slideStyles}"`
+									);
+								}
+								slidesHtml += slideHtml;
 							} catch (e) {
 								console.warn(
 									`Could not load slide type: ${slide.type}`,
@@ -54,8 +141,19 @@ export default defineConfig({
 							}
 						}
 
+						// Prepare font links and global styles to be injected
+						const fontLinkTags = [...fontLinks]
+							.map(
+								(href) =>
+									`<link rel="stylesheet" href="${href}">`
+							)
+							.join("\n");
+						const globalStyleTag = globalStyles
+							? `<style>${globalStyles}</style>`
+							: "";
+
 						// Replace placeholders in HTML
-						return html
+						let finalHtml = html
 							.replace(
 								"<h1></h1>",
 								`<h1>${presentationData.title}</h1>`
@@ -67,8 +165,14 @@ export default defineConfig({
 							.replace("<!-- SLIDES_PLACEHOLDER -->", slidesHtml)
 							.replace(
 								'<script type="module" src="app.js"></script>',
-								'<script src="./shower.js"></script>'
+								'<script type="module" src="/shower.js"></script>'
+							)
+							.replace(
+								"</head>",
+								`${fontLinkTags}\n${globalStyleTag}\n</head>`
 							);
+
+						return finalHtml;
 					} catch (error) {
 						console.error(
 							"Error generating static presentation:",
@@ -77,23 +181,6 @@ export default defineConfig({
 						return html;
 					}
 				},
-			},
-			generateBundle() {
-				try {
-					// Copy shower.js to dist directory
-					const showerSrc =
-						"node_modules/@shower/core/dist/shower.js";
-					const showerDest = "dist/shower.js";
-
-					// Ensure dist directory exists
-					mkdirSync("dist", { recursive: true });
-
-					// Copy the shower core file
-					copyFileSync(showerSrc, showerDest);
-					console.log("Copied shower.js to dist directory");
-				} catch (error) {
-					console.error("Error copying shower.js:", error);
-				}
 			},
 		},
 	],

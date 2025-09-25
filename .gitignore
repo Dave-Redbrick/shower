@@ -1,7 +1,9 @@
-node_modules
-bundled
-presentation.zip
-index.pdf
-formatter.html
-**/.vscode/
-**/jules-scratch/
+# Dependencies
+/node_modules
+
+# Build artifacts
+/dist
+/public
+
+# Lockfiles
+package-lock.json
