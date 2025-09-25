@@ -40,36 +40,39 @@ export default function createComparisonSlide(data) {
           margin: 0 auto;
           display: flex;
           flex-direction: column;
-          justify-content: center;
+          justify-content: start;
         }
         .c-slide-title-box {
-          height: 14vw;
+          margin-top: 4%;
+          height: 20%;
           display: flex;
           align-items: center;
-          justify-content: flex-start;
-          font-size: 7vw;
-          margin-bottom: 1%;
+          justify-content: start;
+          font-size: 230%;
         }
         .c-slide-compare-container {
           display: flex;
           gap: 1%;
-          height:50%
+          height:60%
         }
         .c-slide-col {
-          flex: 1;
+          height: 100%;
+          width: 49.5%;
           display: flex;
           flex-direction: column;
-          box-sizing: border-box;
         }
         .c-slide-col-title {
-          height: 25%;
-          font-size: 3.5vw;
+          height: 20%;
+          width: 100%;
+          font-size: 125%;
           font-weight: bold;
+          display: flex;
           align-items: flex-end;
+          justify-content: start;
         }
         .c-slide-col-content {
-          height: 100%;
-          font-size: 4.2vw;
+          height: 50%;
+          font-size: 150%;
           overflow-y: auto;
         }
       </style>

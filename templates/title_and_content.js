@@ -24,28 +24,28 @@ export default function createTitleAndContentSlide(data) {
           margin: 0 auto;
           display: flex;
           flex-direction: column;
-          align-items: stretch;
-          justify-content: center;
+          justify-content: start;
           height: 100%;
         }
         .tac-slide-title-box, .title-slide-subtitle-box {
           width: 100%;
         }
         .tac-slide-title-box {
+          margin-top: 4%;
           display: flex;
-          height: 14vw;
+          height: 20%;
           align-items: center;
           justify-content: start;
-          font-size: 7vw;
+          font-size: 230%;
           margin-bottom: 1%; 
         }
         .tac-slide-content-box {
           display: flex;
           flex-direction: column;
-          height: 65%;
+          height: 62%;
           align-items: flex-start;
           justify-content: start;
-          font-size: 4.2vw;
+          font-size: 140%;
         }
       </style>
     </section>

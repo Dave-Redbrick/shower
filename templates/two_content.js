@@ -36,10 +36,10 @@ export default function createTwoContentSlide(data) {
         }
         .tc-slide-title-box {
           display: flex;
-          height: 14vw;
+          height: 20%;
           align-items: center;
           justify-content: start;
-          font-size: 7vw;
+          font-size: 230%;
           margin-bottom: 1%; 
         }
         .tc-slide-content-container {
@@ -54,7 +54,7 @@ export default function createTwoContentSlide(data) {
           flex-direction: column;
           width: 49.5%;
           height:100%;
-          font-size: 4vw;
+          font-size: 130%;
         }
       </style>
     </section>

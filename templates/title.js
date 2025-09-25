@@ -36,7 +36,7 @@ export default function createTitleSlide(data) {
           height: 40%;
           align-items: flex-end;
           justify-content: center;
-          font-size: 9vw;
+          font-size: 300%;
           text-align: center;
           margin-bottom: 1%; 
         }
@@ -45,7 +45,7 @@ export default function createTitleSlide(data) {
           height: 30%;
           align-items: flex-start;
           justify-content: center;
-          font-size: 3.8vw;
+          font-size: 120%;
           text-align: center;
         }
       </style>

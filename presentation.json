@@ -1,5 +1,5 @@
 {
-	"title": "My Awesome Presentation",
+	"title": "Presentation Template",
 	"globalSettings": {
 		"ratio": "16/9",
 		"font": "https://fonts.googleapis.com/css2?family=Roboto&display=swap",
@@ -9,63 +9,63 @@
 		{
 			"type": "title",
 			"data": {
-				"title": "제목을 추가하려면 클릭하십시오.",
-				"subtitle": "부제목을 입력하십시오"
+				"title": "Click to add title.",
+				"subtitle": "Enter subtitle"
 			}
 		},
 		{
 			"type": "title_and_content",
 			"data": {
-				"title": "제목을 추가하려면 클릭하십시오.",
-				"content": "* 텍스트를 입력하십시오"
+				"title": "Click to add title.",
+				"content": "* Enter text"
 			}
 		},
 		{
 			"type": "section_header",
 			"data": {
-				"title": "제목을 추가하려면 클릭하십시오.",
-				"subtitle": "텍스트를 입력하십시오"
+				"title": "Click to add title.",
+				"subtitle": "Enter text"
 			}
 		},
 		{
 			"type": "two_content",
 			"data": {
-				"title": "제목을 추가하려면 클릭하십시오.",
-				"content1": "* 텍스트를 입력하십시오",
-				"content2": "* 텍스트를 입력하십시오"
+				"title": "Click to add title.",
+				"content1": "* Enter text",
+				"content2": "* Enter text"
 			}
 		},
 		{
 			"type": "comparison",
 			"data": {
-				"title": "제목을 추가하려면 클릭하십시오.",
-				"subtitle1": "텍스트를 입력하십시오",
-				"content1": "* 텍스트를 입력하십시오",
-				"subtitle2": "텍스트를 입력하십시오",
-				"content2": "* 텍스트를 입력하십시오"
+				"title": "Click to add title.",
+				"subtitle1": "Enter text",
+				"content1": "* Enter text",
+				"subtitle2": "Enter text",
+				"content2": "* Enter text"
 			}
 		},
 		{
 			"type": "title_only",
 			"data": {
-				"title": "Title Only"
+				"title": "Click to add title."
 			}
 		},
 		{
 			"type": "content_with_caption",
 			"data": {
-				"title": "Content with Caption",
-				"caption": "This is the caption.",
-				"content": "This is the main content area, where you can write more detailed text."
+				"title": "Click to add title.",
+				"caption": "Enter text",
+				"content": "* Enter text"
 			}
 		},
 		{
 			"type": "picture_with_caption",
 			"data": {
-				"title": "Picture with Caption",
-				"caption": "This is the caption for the picture.",
+				"title": "Click to add title.",
+				"caption": "Enter text",
 				"imageUrl": "docs/images/ribbon-canvas.png",
-				"altText": "A canvas with a ribbon"
+				"altText": "Click the icon to add an image"
 			}
 		},
 		{

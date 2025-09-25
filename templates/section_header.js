@@ -36,7 +36,7 @@ export default function createSectionHeaderSlide(data) {
           height: 45%;
           align-items: flex-end;
           justify-content: start;
-          font-size: 9.1vw;
+          font-size: 300%;
           text-align: start;
           margin-top: 3%;
           margin-bottom: 1%; 
@@ -46,7 +46,7 @@ export default function createSectionHeaderSlide(data) {
           height: 24%;
           align-items: flex-start;
           justify-content: start;
-          font-size: 3.8vw;
+          font-size: 130%;
           color: #808080;
           text-align: center;
         }
