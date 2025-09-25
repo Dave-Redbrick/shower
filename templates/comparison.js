@@ -5,12 +5,12 @@ export default function createComparisonSlide(data, slideId) {
     <section class="slide comparison-slide" id="${slideId}">
       <div class="c-slide-container">
         <div class="c-slide-title-box">
-          ${marked.parseInline(data.title)}
+          ${marked.parse(data.title)}
         </div>
         <div class="c-slide-compare-container">
           <div class="c-slide-col">
             <div class="c-slide-col-title">
-              ${marked.parseInline(data.subtitle1)}
+              ${marked.parse(data.subtitle1)}
             </div>
             <div class="c-slide-col-content">
               ${marked.parse(data.content1)}
@@ -18,7 +18,7 @@ export default function createComparisonSlide(data, slideId) {
           </div>
           <div class="c-slide-col">
             <div class="c-slide-col-title">
-              ${marked.parseInline(data.subtitle2)}
+              ${marked.parse(data.subtitle2)}
             </div>
             <div class="c-slide-col-content">
               ${marked.parse(data.content2)}

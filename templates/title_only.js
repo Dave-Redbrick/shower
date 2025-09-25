@@ -5,7 +5,7 @@ export default function createTitleOnlySlide(data, slideId) {
     <section class="slide title-only-slide" id="${slideId}">
       <div class="to-slide-container">
         <div class="to-slide-title-box">
-          ${marked.parseInline(data.title)}
+          ${marked.parse(data.title)}
         </div>
       </div>
       <style>
