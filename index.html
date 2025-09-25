@@ -26,9 +26,40 @@
 			.slide p {
 				margin-bottom: 0px;
 			}
+			#print-button {
+				display: none;
+				position: fixed;
+				top: 20px;
+				right: 20px;
+				z-index: 1000;
+				padding: 10px 15px;
+				font-family: "Helvetica Neue", sans-serif;
+				font-size: 14px;
+				color: #333;
+				background-color: #fff;
+				border: 1px solid #ccc;
+				border-radius: 5px;
+				cursor: pointer;
+				box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+				transition: all 0.2s ease-in-out;
+			}
+			#print-button:hover {
+				background-color: #f8f8f8;
+				border-color: #bbb;
+				box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+			}
+			body.list #print-button {
+				display: block;
+			}
+			@media print {
+				#print-button {
+					display: none !important;
+				}
+			}
 		</style>
 	</head>
 	<body class="shower list">
+		<button id="print-button" onclick="window.print()">Print to PDF</button>
 		<header class="caption">
 			<h1></h1>
 			<p></p>
