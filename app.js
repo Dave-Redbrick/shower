@@ -97,66 +97,19 @@ if (import.meta.env.DEV) {
 			}
 
 			let slidesHtml = "";
-			let slideStyles = "";
 			for (const [index, slide] of presentation.slides.entries()) {
-				const slideId = `${index + 1}`;
 				try {
+					const slideId = `${index + 1}`;
 					const module = await import(`/templates/${slide.type}.js`);
 					const createSlide = module.default;
 					slidesHtml += createSlide(slide.data, slideId);
-
-					// Handle slide-specific settings
-					let customStyles = "";
-					if (slide.font) {
-						const isUrl = slide.font.startsWith("http");
-						if (isUrl) {
-							const link = document.createElement("link");
-							link.rel = "stylesheet";
-							link.href = slide.font;
-							document.head.appendChild(link);
-							try {
-								const url = new URL(slide.font);
-								const family = url.searchParams.get("family");
-								if (family) {
-									customStyles += `#${slideId} { font-family: "${
-										family.split(":")[0]
-									}", sans-serif; }`;
-								}
-							} catch (e) {
-								console.error(
-									"Could not parse font family from URL:",
-									e
-								);
-							}
-						} else {
-							customStyles += `#${slideId} { font-family: ${slide.font}; }`;
-						}
-					}
-					if (slide.background) {
-						const isUrl =
-							slide.background.startsWith("http") ||
-							slide.background.startsWith("/");
-						const backgroundValue = isUrl
-							? `url('${slide.background}')`
-							: slide.background;
-						customStyles += `#${slideId} { background: ${backgroundValue}; background-size: cover; }`;
-					}
-					if (customStyles) {
-						slideStyles += customStyles;
-					}
 				} catch (e) {
 					console.error(
 						`Could not load slide type: ${slide.type}`,
 						e
 					);
-					slidesHtml += `<section class="slide" id="${slideId}"><h2>Error: Unknown slide type '${slide.type}'</h2></section>`;
+					slidesHtml += `<section class="slide"><h2>Error: Unknown slide type '${slide.type}'</h2></section>`;
 				}
-			}
-
-			if (slideStyles) {
-				const styleElement = document.createElement("style");
-				styleElement.textContent = slideStyles;
-				document.head.appendChild(styleElement);
 			}
 
 			const headerElement = document.querySelector("header.caption");
@@ -171,6 +124,53 @@ if (import.meta.env.DEV) {
 			script.src = "/node_modules/@shower/core/dist/shower.js";
 			script.onload = () => {
 				console.log("Shower core loaded successfully");
+				for (const [index, slide] of presentation.slides.entries()) {
+					const slideId = `${index + 1}`;
+					const slideElement = document.getElementById(slideId);
+					if (slideElement) {
+						// Apply font styles
+						if (slide.font) {
+							const isUrl = slide.font.startsWith("http");
+							if (isUrl) {
+								const link = document.createElement("link");
+								link.rel = "stylesheet";
+								link.href = slide.font;
+								document.head.appendChild(link);
+								try {
+									const url = new URL(slide.font);
+									const family = url.searchParams.get("family");
+									if (family) {
+										const fontName = family.split(":")[0];
+										slideElement.style.fontFamily = `"${fontName}", sans-serif`;
+										// Apply to all children as well
+										slideElement.querySelectorAll('*').forEach(child => {
+											child.style.fontFamily = `"${fontName}", sans-serif`;
+										});
+									}
+								} catch (e) {
+									console.error("Could not parse font family from URL:", e);
+								}
+							} else {
+								slideElement.style.fontFamily = slide.font;
+								slideElement.querySelectorAll('*').forEach(child => {
+									child.style.fontFamily = slide.font;
+								});
+							}
+						}
+
+						// Apply background styles
+						if (slide.background) {
+							const isUrl =
+								slide.background.startsWith("http") ||
+								slide.background.startsWith("/");
+							const backgroundValue = isUrl
+								? `url('${slide.background}')`
+								: slide.background;
+							slideElement.style.background = backgroundValue;
+							slideElement.style.backgroundSize = "cover";
+						}
+					}
+				}
 			};
 			script.onerror = () => {
 				console.error("Failed to load shower core");
