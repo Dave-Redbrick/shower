@@ -68,6 +68,7 @@ export default function createContentWithCaptionSlide(data, slideId) {
           height: 100%;
           font-size: 160%;
           margin-top: 14%;
+        }
       </style>
     </section>
   `;

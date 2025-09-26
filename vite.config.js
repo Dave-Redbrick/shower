@@ -44,10 +44,18 @@ export default defineConfig({
 								fontLinks.add(fontUrl);
 								try {
 									const url = new URL(fontUrl);
-									const family = url.searchParams.get("family");
-									return family ? `"${family.split(":")[0]}", sans-serif` : "";
+									const family =
+										url.searchParams.get("family");
+									return family
+										? `"${
+												family.split(":")[0]
+										  }", sans-serif`
+										: "";
 								} catch (e) {
-									console.error("Could not parse font family from URL:", e);
+									console.error(
+										"Could not parse font family from URL:",
+										e
+									);
 									return "";
 								}
 							}
@@ -59,12 +67,14 @@ export default defineConfig({
 							const settings = presentationData.globalSettings;
 							const globalFont = getFontFamily(settings.font);
 							if (globalFont) {
-								allStyles += `.shower, .shower h1, .shower h2, .shower p, .shower li, .shower .caption p, .shower .caption h1 { font-family: ${globalFont} !important; }\n`;
+								allStyles += `.shower slide * { font-family: ${globalFont} !important; }\n`;
 							}
 							if (settings.background) {
-								const backgroundValue = settings.background.startsWith("http") || settings.background.startsWith("/")
-									? `url('${settings.background}')`
-									: settings.background;
+								const backgroundValue =
+									settings.background.startsWith("http") ||
+									settings.background.startsWith("/")
+										? `url('${settings.background}')`
+										: settings.background;
 								allStyles += `.shower .slide { background: ${backgroundValue} !important; background-size: cover !important; }\n`;
 							}
 							if (settings.ratio) {
@@ -73,44 +83,74 @@ export default defineConfig({
 						}
 
 						// Process each slide
-						for (const [index, slide] of presentationData.slides.entries()) {
+						for (const [
+							index,
+							slide,
+						] of presentationData.slides.entries()) {
 							const slideId = `${index + 1}`;
 
 							// Handle slide-specific styles as CSS rules
 							if (slide.font) {
 								const slideFont = getFontFamily(slide.font);
 								if (slideFont) {
-									allStyles += `.shower .slide[id='${slideId}'] h1, .shower .slide[id='${slideId}'] h2, .shower .slide[id='${slideId}'] p, .shower .slide[id='${slideId}'] li { font-family: ${slideFont} !important; }\n`;
+									allStyles += `.shower .slide[id='${slideId}'] * { font-family: ${slideFont} !important; }\n`;
 								}
 							}
 							if (slide.background) {
-								const backgroundValue = slide.background.startsWith("http") || slide.background.startsWith("/")
-									? `url('${slide.background}')`
-									: slide.background;
+								const backgroundValue =
+									slide.background.startsWith("http") ||
+									slide.background.startsWith("/")
+										? `url('${slide.background}')`
+										: slide.background;
 								allStyles += `.shower .slide[id='${slideId}'] { background: ${backgroundValue} !important; background-size: cover !important; }\n`;
 							}
 
 							// Generate slide HTML using original simple template functions
-							const templatePath = resolve(`templates/${slide.type}.js`);
-							const templateModule = await import(`file://${templatePath}`);
+							const templatePath = resolve(
+								`templates/${slide.type}.js`
+							);
+							const templateModule = await import(
+								`file://${templatePath}`
+							);
 							const createSlide = templateModule.default;
 							slidesHtml += createSlide(slide.data, slideId);
 						}
 
 						// Prepare styles and links for injection
-						const fontLinkTags = [...fontLinks].map(href => `<link rel="stylesheet" href="${href}">`).join("\n");
-						const styleTag = allStyles.trim() ? `<style>${allStyles}</style>` : "";
+						const fontLinkTags = [...fontLinks]
+							.map(
+								(href) =>
+									`<link rel="stylesheet" href="${href}">`
+							)
+							.join("\n");
+						const styleTag = allStyles.trim()
+							? `<style>${allStyles}</style>`
+							: "";
 
 						// Replace placeholders in HTML
 						return html
-							.replace("<h1></h1>", `<h1>${presentationData.title}</h1>`)
-							.replace("<title>Shower Presentation Engine</title>", `<title>${presentationData.title}</title>`)
+							.replace(
+								"<h1></h1>",
+								`<h1>${presentationData.title}</h1>`
+							)
+							.replace(
+								"<title>Shower Presentation Engine</title>",
+								`<title>${presentationData.title}</title>`
+							)
 							.replace("<!-- SLIDES_PLACEHOLDER -->", slidesHtml)
-							.replace('<script type="module" src="app.js"></script>', '<script src="/shower.js"></script>')
-							.replace("</head>", `${fontLinkTags}\n${styleTag}\n</head>`);
-
+							.replace(
+								'<script type="module" src="app.js"></script>',
+								'<script src="/shower.js"></script>'
+							)
+							.replace(
+								"</head>",
+								`${fontLinkTags}\n${styleTag}\n</head>`
+							);
 					} catch (error) {
-						console.error("Error generating static presentation:", error);
+						console.error(
+							"Error generating static presentation:",
+							error
+						);
 						return html;
 					}
 				},
