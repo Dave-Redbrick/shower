@@ -7,13 +7,118 @@
 	},
 	"slides": [
 		{
+			"type": "canva_title",
+			"data": {
+				"header": "This Week's Lesson Topic",
+				"title": "Today's Class",
+				"subtitle": "What should we learn?",
+				"footer": "Ms. Lee Soo-jin"
+			},
+			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
+			"background": "/images/intro-bg.png"
+		},
+		{
+			"type": "canva_objective",
+			"data": {
+				"title": "Today's Learning Goals",
+				"objectives": [
+					"Please write today's learning goals here.",
+					"Please write today's learning goals here.",
+					"Please write today's learning goals here."
+				]
+			},
+			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
+			"background": "/images/content-bg.png"
+		},
+		{
+			"type": "canva_picture_with_topic",
+			"data": {
+				"title": "Today's Learning Topic",
+				"topic": "Please briefly write today's learning topic here.",
+				"keywords": ["keyword1", "keyword2"],
+				"imageUrl": "https://place.dog/300/200?random=1"
+			},
+			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
+			"background": "/images/content-bg.png"
+		},
+		{
+			"type": "canva_image_card_content",
+			"data": {
+				"title": "Learning Content",
+				"imageUrl1": "https://place.dog/300/200?random=2",
+				"subtitle1": "Today's Learning",
+				"content1": "Please briefly write today's learning content here.",
+				"imageUrl2": "https://place.dog/300/200?random=3",
+				"subtitle2": "Today's Learning",
+				"content2": "Please briefly write today's learning content here."
+			},
+			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
+			"background": "/images/content-bg.png"
+		},
+		{
+			"type": "canva_keyword_circle",
+			"data": {
+				"title": "Learning Content",
+				"keywords": [
+					{
+						"keyword": "Keyword1",
+						"description": "Please write today's learning keywords here."
+					},
+					{
+						"keyword": "Keyword2",
+						"description": "Please write today's learning keywords here."
+					},
+					{
+						"keyword": "Keyword3",
+						"description": "Please write today's learning keywords here."
+					}
+				]
+			},
+			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
+			"background": "/images/content-bg.png"
+		},
+		{
+			"type": "canva_content_detail",
+			"data": {
+				"title": "Learning Content",
+				"header": "Please write down today's learning content in detail",
+				"details": [
+					"Please write down today's learning content in detail here.",
+					"Please write down today's learning content in detail here.",
+					"Please write down today's learning content in detail here."
+				]
+			},
+			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
+			"background": "/images/content-bg.png"
+		},
+		{
+			"type": "canva_content_summary",
+			"data": {
+				"title": "Review of Learning Content",
+				"header": "Please summarize what you learned today.",
+				"summarys": [
+					"Please summarize what you learned today here. Please summarize what you learned today here.",
+					"Please summarize what you learned today here. Please summarize what you learned today here."
+				]
+			},
+			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
+			"background": "/images/content-bg.png"
+		},
+		{
+			"type": "title",
+			"data": {
+				"title": "Fresh Air",
+				"subtitle": "Buy an air purifier now"
+			},
+			"font": "https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap",
+			"background": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop"
+		},
+		{
 			"type": "title",
 			"data": {
 				"title": "Click to add title.",
 				"subtitle": "Enter subtitle"
-			},
-			"font": "https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap",
-			"background": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop"
+			}
 		},
 		{
 			"type": "title_and_content",
@@ -66,7 +171,7 @@
 			"data": {
 				"title": "Click to add title.",
 				"caption": "Enter text",
-				"imageUrl": "docs/images/ribbon-canvas.png",
+				"imageUrl": "https://place.dog/300/200?random",
 				"altText": "Click the icon to add an image"
 			}
 		},
