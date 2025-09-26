@@ -1,16 +1,8 @@
 import { marked } from "marked";
 
-export default function createPictureWithCaptionSlide(
-	data,
-	slideId,
-	inlineStyle,
-	fontStyleBlock
-) {
+export default function createPictureWithCaptionSlide(data, slideId) {
 	return `
-    <section class="slide picture-with-caption-slide" id="${slideId}" style="${
-		inlineStyle || ""
-	}">
-      ${fontStyleBlock || ""}
+    <section class="slide picture-with-caption-slide" id="${slideId}">
       <div class="pwc-slide-container">
         <div class="pwc-slide-caption-container">
           <div class="pwc-slide-title-box">

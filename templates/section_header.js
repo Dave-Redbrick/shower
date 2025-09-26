@@ -1,16 +1,8 @@
 import { marked } from "marked";
 
-export default function createSectionHeaderSlide(
-	data,
-	slideId,
-	inlineStyle,
-	fontStyleBlock
-) {
+export default function createSectionHeaderSlide(data, slideId) {
 	return `
-    <section class="slide section-header-slide" id="${slideId}" style="${
-		inlineStyle || ""
-	}">
-      ${fontStyleBlock || ""}
+    <section class="slide section-header-slide" id="${slideId}">
       <div class="sh-slide-container">
         <div class="sh-slide-title-box">
           ${marked.parse(data.title)}

@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
-import { readFileSync, copyFileSync, mkdirSync } from "fs";
-import { resolve, dirname } from "path";
+import { readFileSync } from "fs";
+import { resolve } from "path";
 
 export default defineConfig({
 	server: {
@@ -33,155 +33,84 @@ export default defineConfig({
 							readFileSync("presentation.json", "utf-8")
 						);
 
-						// Generate slides HTML and collect styles
 						let slidesHtml = "";
 						let fontLinks = new Set();
-						let globalStyles = "";
+						let allStyles = "";
+
+						// Helper to process font properties
+						const getFontFamily = (fontUrl) => {
+							if (!fontUrl) return "";
+							if (fontUrl.startsWith("http")) {
+								fontLinks.add(fontUrl);
+								try {
+									const url = new URL(fontUrl);
+									const family = url.searchParams.get("family");
+									return family ? `"${family.split(":")[0]}", sans-serif` : "";
+								} catch (e) {
+									console.error("Could not parse font family from URL:", e);
+									return "";
+								}
+							}
+							return fontUrl;
+						};
 
 						// Handle global settings
 						if (presentationData.globalSettings) {
 							const settings = presentationData.globalSettings;
-							if (settings.font) {
-								if (settings.font.startsWith("http")) {
-									fontLinks.add(settings.font);
-									try {
-										const url = new URL(settings.font);
-										const family =
-											url.searchParams.get("family");
-										if (family) {
-											globalStyles += `.shower, .shower h1, .shower h2, .shower p, .shower li { font-family: "${
-												family.split(":")[0]
-											}", sans-serif !important; }`;
-										}
-									} catch (e) {
-										console.error(
-											"Could not parse font family from URL:",
-											e
-										);
-									}
-								} else {
-									globalStyles += `.shower, .shower h1, .shower h2, .shower p, .shower li { font-family: ${settings.font} !important; }`;
-								}
+							const globalFont = getFontFamily(settings.font);
+							if (globalFont) {
+								allStyles += `.shower, .shower h1, .shower h2, .shower p, .shower li, .shower .caption p, .shower .caption h1 { font-family: ${globalFont} !important; }\n`;
 							}
 							if (settings.background) {
-								const isUrl =
-									settings.background.startsWith("http") ||
-									settings.background.startsWith("/");
-								const backgroundValue = isUrl
+								const backgroundValue = settings.background.startsWith("http") || settings.background.startsWith("/")
 									? `url('${settings.background}')`
 									: settings.background;
-								globalStyles += `.shower .slide { background: ${backgroundValue} !important; background-size: cover !important; }`;
+								allStyles += `.shower .slide { background: ${backgroundValue} !important; background-size: cover !important; }\n`;
 							}
 							if (settings.ratio) {
-								globalStyles += `.shower { --slide-ratio: calc(${settings.ratio}); }`;
+								allStyles += `.shower { --slide-ratio: calc(${settings.ratio}); }\n`;
 							}
 						}
 
+						// Process each slide
 						for (const [index, slide] of presentationData.slides.entries()) {
-							try {
-								const templatePath = resolve(
-									`templates/${slide.type}.js`
-								);
-								const templateModule = await import(
-									`file://${templatePath}`
-								);
-								const createSlide = templateModule.default;
-								const slideId = `${index + 1}`;
+							const slideId = `${index + 1}`;
 
-								// Handle slide-specific styles
-								let backgroundStyle = "";
-								let fontStyleBlock = "";
-
-								if (slide.font) {
-									let fontFamily = "";
-									if (slide.font.startsWith("http")) {
-										fontLinks.add(slide.font);
-										try {
-											const url = new URL(slide.font);
-											const family =
-												url.searchParams.get("family");
-											if (family) {
-												fontFamily = `'${
-													family.split(":")[0]
-												}', sans-serif`;
-											}
-										} catch (e) {
-											console.error(
-												"Could not parse font family from URL:",
-												e
-											);
-										}
-									} else {
-										fontFamily = slide.font;
-									}
-									if (fontFamily) {
-										fontStyleBlock = `<style>[id='${slideId}'] h1, [id='${slideId}'] h2, [id='${slideId}'] p, [id='${slideId}'] li { font-family: ${fontFamily} !important; }</style>`;
-									}
+							// Handle slide-specific styles as CSS rules
+							if (slide.font) {
+								const slideFont = getFontFamily(slide.font);
+								if (slideFont) {
+									allStyles += `.shower .slide[id='${slideId}'] h1, .shower .slide[id='${slideId}'] h2, .shower .slide[id='${slideId}'] p, .shower .slide[id='${slideId}'] li { font-family: ${slideFont} !important; }\n`;
 								}
-
-								if (slide.background) {
-									const isUrl =
-										slide.background.startsWith("http") ||
-										slide.background.startsWith("/");
-									const backgroundValue = isUrl
-										? `url('${slide.background}')`
-										: slide.background;
-									backgroundStyle = `background: ${backgroundValue} !important; background-size: cover !important;`;
-								}
-
-								// Pass styles to the createSlide function
-								slidesHtml += createSlide(
-									slide.data,
-									slideId,
-									backgroundStyle,
-									fontStyleBlock
-								);
-							} catch (e) {
-								console.warn(
-									`Could not load slide type: ${slide.type}`,
-									e
-								);
-								slidesHtml += `<section class="slide"><h2>Error: Unknown slide type '${slide.type}'</h2></section>`;
 							}
+							if (slide.background) {
+								const backgroundValue = slide.background.startsWith("http") || slide.background.startsWith("/")
+									? `url('${slide.background}')`
+									: slide.background;
+								allStyles += `.shower .slide[id='${slideId}'] { background: ${backgroundValue} !important; background-size: cover !important; }\n`;
+							}
+
+							// Generate slide HTML using original simple template functions
+							const templatePath = resolve(`templates/${slide.type}.js`);
+							const templateModule = await import(`file://${templatePath}`);
+							const createSlide = templateModule.default;
+							slidesHtml += createSlide(slide.data, slideId);
 						}
 
-						// Prepare font links and global styles to be injected
-						const fontLinkTags = [...fontLinks]
-							.map(
-								(href) =>
-									`<link rel="stylesheet" href="${href}">`
-							)
-							.join("\n");
-						const styleTag = globalStyles.trim()
-							? `<style>${globalStyles}</style>`
-							: "";
+						// Prepare styles and links for injection
+						const fontLinkTags = [...fontLinks].map(href => `<link rel="stylesheet" href="${href}">`).join("\n");
+						const styleTag = allStyles.trim() ? `<style>${allStyles}</style>` : "";
 
 						// Replace placeholders in HTML
-						let finalHtml = html
-							.replace(
-								"<h1></h1>",
-								`<h1>${presentationData.title}</h1>`
-							)
-							.replace(
-								"<title>Shower Presentation Engine</title>",
-								`<title>${presentationData.title}</title>`
-							)
+						return html
+							.replace("<h1></h1>", `<h1>${presentationData.title}</h1>`)
+							.replace("<title>Shower Presentation Engine</title>", `<title>${presentationData.title}</title>`)
 							.replace("<!-- SLIDES_PLACEHOLDER -->", slidesHtml)
-							.replace(
-								'<script type="module" src="app.js"></script>',
-								'<script type="module" src="/shower.js"></script>'
-							)
-							.replace(
-								"</head>",
-								`${fontLinkTags}\n${styleTag}\n</head>`
-							);
+							.replace('<script type="module" src="app.js"></script>', '<script src="/shower.js"></script>')
+							.replace("</head>", `${fontLinkTags}\n${styleTag}\n</head>`);
 
-						return finalHtml;
 					} catch (error) {
-						console.error(
-							"Error generating static presentation:",
-							error
-						);
+						console.error("Error generating static presentation:", error);
 						return html;
 					}
 				},

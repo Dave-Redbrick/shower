@@ -1,16 +1,8 @@
 import { marked } from "marked";
 
-export default function createComparisonSlide(
-	data,
-	slideId,
-	inlineStyle,
-	fontStyleBlock
-) {
+export default function createComparisonSlide(data, slideId) {
 	return `
-    <section class="slide comparison-slide" id="${slideId}" style="${
-		inlineStyle || ""
-	}">
-      ${fontStyleBlock || ""}
+    <section class="slide comparison-slide" id="${slideId}">
       <div class="c-slide-container">
         <div class="c-slide-title-box">
           ${marked.parse(data.title)}
