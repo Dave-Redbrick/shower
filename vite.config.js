@@ -100,7 +100,7 @@ export default defineConfig({
 											if (family) {
 												slideStyles += `font-family: '${
 													family.split(":")[0]
-												}', sans-serif;`;
+												}', sans-serif !important;`;
 											}
 										} catch (e) {
 											console.error(
@@ -109,7 +109,7 @@ export default defineConfig({
 											);
 										}
 									} else {
-										slideStyles += `font-family: ${slide.font};`;
+										slideStyles += `font-family: ${slide.font} !important;`;
 									}
 								}
 								if (slide.background) {
@@ -119,7 +119,7 @@ export default defineConfig({
 									const backgroundValue = isUrl
 										? `url('${slide.background}')`
 										: slide.background;
-									slideStyles += `background: ${backgroundValue}; background-size: cover;`;
+									slideStyles += `background: ${backgroundValue} !important; background-size: cover !important;`;
 								}
 
 								// Pass styles to the createSlide function
