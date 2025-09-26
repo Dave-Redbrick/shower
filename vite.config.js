@@ -37,7 +37,6 @@ export default defineConfig({
 						let slidesHtml = "";
 						let fontLinks = new Set();
 						let globalStyles = "";
-						let perSlideStyles = "";
 
 						// Handle global settings
 						if (presentationData.globalSettings) {
@@ -50,7 +49,7 @@ export default defineConfig({
 										const family =
 											url.searchParams.get("family");
 										if (family) {
-											globalStyles += `[class*="shower"], [class*="shower"] * { font-family: "${
+											globalStyles += `.shower, .shower h1, .shower h2, .shower p, .shower li { font-family: "${
 												family.split(":")[0]
 											}", sans-serif !important; }`;
 										}
@@ -61,7 +60,7 @@ export default defineConfig({
 										);
 									}
 								} else {
-									globalStyles += `[class*="shower"], [class*="shower"] * { font-family: ${settings.font} !important; }`;
+									globalStyles += `.shower, .shower h1, .shower h2, .shower p, .shower li { font-family: ${settings.font} !important; }`;
 								}
 							}
 							if (settings.background) {
@@ -90,7 +89,9 @@ export default defineConfig({
 								const slideId = `${index + 1}`;
 
 								// Handle slide-specific styles
-								let slideInlineStyle = "";
+								let backgroundStyle = "";
+								let fontStyleBlock = "";
+
 								if (slide.font) {
 									let fontFamily = "";
 									if (slide.font.startsWith("http")) {
@@ -114,9 +115,10 @@ export default defineConfig({
 										fontFamily = slide.font;
 									}
 									if (fontFamily) {
-										perSlideStyles += `[id='${slideId}'], [id='${slideId}'] * { font-family: ${fontFamily} !important; }\n`;
+										fontStyleBlock = `<style>[id='${slideId}'] h1, [id='${slideId}'] h2, [id='${slideId}'] p, [id='${slideId}'] li { font-family: ${fontFamily} !important; }</style>`;
 									}
 								}
+
 								if (slide.background) {
 									const isUrl =
 										slide.background.startsWith("http") ||
@@ -124,14 +126,15 @@ export default defineConfig({
 									const backgroundValue = isUrl
 										? `url('${slide.background}')`
 										: slide.background;
-									slideInlineStyle += `background: ${backgroundValue} !important; background-size: cover !important;`;
+									backgroundStyle = `background: ${backgroundValue} !important; background-size: cover !important;`;
 								}
 
 								// Pass styles to the createSlide function
 								slidesHtml += createSlide(
 									slide.data,
 									slideId,
-									slideInlineStyle
+									backgroundStyle,
+									fontStyleBlock
 								);
 							} catch (e) {
 								console.warn(
@@ -149,9 +152,8 @@ export default defineConfig({
 									`<link rel="stylesheet" href="${href}">`
 							)
 							.join("\n");
-						const allStyles = `${globalStyles}\n${perSlideStyles}`;
-						const styleTag = allStyles.trim()
-							? `<style>${allStyles}</style>`
+						const styleTag = globalStyles.trim()
+							? `<style>${globalStyles}</style>`
 							: "";
 
 						// Replace placeholders in HTML

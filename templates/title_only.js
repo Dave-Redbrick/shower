@@ -1,10 +1,16 @@
 import { marked } from "marked";
 
-export default function createTitleOnlySlide(data, slideId, style) {
+export default function createTitleOnlySlide(
+	data,
+	slideId,
+	inlineStyle,
+	fontStyleBlock
+) {
 	return `
     <section class="slide title-only-slide" id="${slideId}" style="${
-    style || ""
-  }">
+		inlineStyle || ""
+	}">
+      ${fontStyleBlock || ""}
       <div class="to-slide-container">
         <div class="to-slide-title-box">
           ${marked.parse(data.title)}

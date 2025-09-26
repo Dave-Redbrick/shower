@@ -1,5 +1,12 @@
-export default function createBlankSlide(data, slideId, style) {
-  return `
-    <section class="slide" id="${slideId}" style="${style || ""}"></section>
+export default function createBlankSlide(
+	data,
+	slideId,
+	inlineStyle,
+	fontStyleBlock
+) {
+	return `
+    <section class="slide" id="${slideId}" style="${inlineStyle || ""}">${
+		fontStyleBlock || ""
+	}</section>
   `;
 }
