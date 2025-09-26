@@ -37,6 +37,7 @@ export default defineConfig({
 						let slidesHtml = "";
 						let fontLinks = new Set();
 						let globalStyles = "";
+						let perSlideStyles = "";
 
 						// Handle global settings
 						if (presentationData.globalSettings) {
@@ -49,7 +50,7 @@ export default defineConfig({
 										const family =
 											url.searchParams.get("family");
 										if (family) {
-											globalStyles += `.shower, .shower * { font-family: "${
+											globalStyles += `[class*="shower"], [class*="shower"] * { font-family: "${
 												family.split(":")[0]
 											}", sans-serif !important; }`;
 										}
@@ -60,7 +61,7 @@ export default defineConfig({
 										);
 									}
 								} else {
-									globalStyles += `.shower, .shower * { font-family: ${settings.font} !important; }`;
+									globalStyles += `[class*="shower"], [class*="shower"] * { font-family: ${settings.font} !important; }`;
 								}
 							}
 							if (settings.background) {
@@ -89,8 +90,9 @@ export default defineConfig({
 								const slideId = `${index + 1}`;
 
 								// Handle slide-specific styles
-								let slideStyles = "";
+								let slideInlineStyle = "";
 								if (slide.font) {
+									let fontFamily = "";
 									if (slide.font.startsWith("http")) {
 										fontLinks.add(slide.font);
 										try {
@@ -98,9 +100,9 @@ export default defineConfig({
 											const family =
 												url.searchParams.get("family");
 											if (family) {
-												slideStyles += `font-family: '${
+												fontFamily = `'${
 													family.split(":")[0]
-												}', sans-serif !important;`;
+												}', sans-serif`;
 											}
 										} catch (e) {
 											console.error(
@@ -109,7 +111,10 @@ export default defineConfig({
 											);
 										}
 									} else {
-										slideStyles += `font-family: ${slide.font} !important;`;
+										fontFamily = slide.font;
+									}
+									if (fontFamily) {
+										perSlideStyles += `[id='${slideId}'], [id='${slideId}'] * { font-family: ${fontFamily} !important; }\n`;
 									}
 								}
 								if (slide.background) {
@@ -119,14 +124,14 @@ export default defineConfig({
 									const backgroundValue = isUrl
 										? `url('${slide.background}')`
 										: slide.background;
-									slideStyles += `background: ${backgroundValue} !important; background-size: cover !important;`;
+									slideInlineStyle += `background: ${backgroundValue} !important; background-size: cover !important;`;
 								}
 
 								// Pass styles to the createSlide function
 								slidesHtml += createSlide(
 									slide.data,
 									slideId,
-									slideStyles
+									slideInlineStyle
 								);
 							} catch (e) {
 								console.warn(
@@ -144,8 +149,9 @@ export default defineConfig({
 									`<link rel="stylesheet" href="${href}">`
 							)
 							.join("\n");
-						const globalStyleTag = globalStyles
-							? `<style>${globalStyles}</style>`
+						const allStyles = `${globalStyles}\n${perSlideStyles}`;
+						const styleTag = allStyles.trim()
+							? `<style>${allStyles}</style>`
 							: "";
 
 						// Replace placeholders in HTML
@@ -165,7 +171,7 @@ export default defineConfig({
 							)
 							.replace(
 								"</head>",
-								`${fontLinkTags}\n${globalStyleTag}\n</head>`
+								`${fontLinkTags}\n${styleTag}\n</head>`
 							);
 
 						return finalHtml;
