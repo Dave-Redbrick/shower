@@ -14,7 +14,6 @@ export default defineConfig({
 			input: {
 				main: "index.html",
 			},
-			external: ["/shower.js"],
 		},
 	},
 	plugins: [
@@ -123,15 +122,12 @@ export default defineConfig({
 									slideStyles += `background: ${backgroundValue}; background-size: cover;`;
 								}
 
-								// Pass styles to the createSlide function or add them to the section tag
-								let slideHtml = createSlide(slide.data, slideId);
-								if (slideStyles) {
-									slideHtml = slideHtml.replace(
-										/(<section\s+class="slide[^"]*")/,
-										`$1 style="${slideStyles}"`
-									);
-								}
-								slidesHtml += slideHtml;
+								// Pass styles to the createSlide function
+								slidesHtml += createSlide(
+									slide.data,
+									slideId,
+									slideStyles
+								);
 							} catch (e) {
 								console.warn(
 									`Could not load slide type: ${slide.type}`,

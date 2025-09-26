@@ -1,8 +1,8 @@
 import { marked } from "marked";
 
-export default function createTitleSlide(data, slideId) {
+export default function createTitleSlide(data, slideId, style) {
 	return `
-    <section class="slide title-slide" id="${slideId}">
+    <section class="slide title-slide" id="${slideId}" style="${style || ""}">
       <div class="title-slide-container">
         <div class="title-slide-title-box">
           ${marked.parse(data.title)}
