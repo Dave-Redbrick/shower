@@ -1,41 +1,40 @@
 import { marked } from "marked";
 
-export default function createDetailedListSlide(data, slideId) {
+export default function createContentSummarySlide(data, slideId) {
 	const summarys = data.summarys ? data.summarys.slice(0, 2) : [];
 
 	return `
-    <section class="slide detailed-list-slide" id="${slideId}">
-      <div class="dls-container">
-        <div class="dls-title-box">${marked.parse(data.title)}</div>
-        <div class="dls-header-box">${marked.parse(data.header)}</div>
-        <div class="dls-list-container">
+    <section class="slide content-summary-slide" id="${slideId}">
+      <div class="cs-slide-container">
+        <div class="cs-slide-title-box">${marked.parse(data.title)}</div>
+        <div class="cs-slide-header-box">${marked.parse(data.header)}</div>
+        <div class="cs-slide-list-container">
           ${summarys
 				.map(
-					(summary) => `
-            <div class="dls-detail-item">
-              <div class="dls-detail-icon">✔️</div>
-              <div class="dls-detail-text">${marked.parse(summary)}</div>
+					(summary, idx) => `
+            <div class="cs-slide-item">
+              <div class="cs-slide-icon">✓</div>
+              <div class="cs-slide-text">${marked.parse(summary)}</div>
             </div>
-                    ${
-						summarys.length > 1
-							? `<div class="dls-divider"></div>`
-							: ""
-					}
+            ${
+				idx < summarys.length - 1
+					? `<div class="cs-slide-div"></div>`
+					: ""
+			}
             `
 				)
 				.join("")}
-
         </div>
       </div>
       <style>
-        .detailed-list-slide {
+        .content-summary-slide {
           display: flex;
           align-items: center;
           justify-content: center;
           padding: 0;
           line-height: 1.08;
         }
-        .dls-container {
+        .cs-slide-container {
           width: 80%;
           height: 84%;
           display: flex;
@@ -43,7 +42,7 @@ export default function createDetailedListSlide(data, slideId) {
           align-items: center;
           justify-content: start;
         }
-        .dls-title-box {
+        .cs-slide-title-box {
           display: flex;
           height: 8%;
           font-size: 240%;
@@ -52,7 +51,7 @@ export default function createDetailedListSlide(data, slideId) {
           justify-content: center;
           margin-top: 6%;
         }
-        .dls-header-box {
+        .cs-slide-header-box {
           display: flex;
           width: 75%;
           height: 10%;
@@ -65,32 +64,41 @@ export default function createDetailedListSlide(data, slideId) {
           justify-content: center;
           margin-top: 8%;
         }
-        .dls-list-container {
+        .cs-slide-list-container {
+          display: flex;
           width: 100%;
           flex: 1;
-          display: flex;
           flex-direction: column;
+          justify-content: center;
+          align-items: center;
           margin-top: 2%;
         }
-        .dls-detail-item {
+        .cs-slide-item {
           display: flex;
-          align-items: flex-start;
-          gap: 3%;
-          padding: 2% 0;
+          align-items: center;
+          justify-content: flex-start;
+          margin-bottom: 3%;
         }
-        .dls-detail-icon {
+        .cs-slide-icon {
           flex-shrink: 0;
-          font-size: 180%;
-          color: #FFD59E;
-          margin-top: 2%;
-        }
-        .dls-detail-text {
-          font-size: 140%;
+          width: 6%;
+          aspect-ratio: 1 / 1;
+          background-color: #FFD59E;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 100%;
           font-weight: 500;
-          line-height: 1.4;
-          flex: 1;
+          color: #fff;
+          margin-right: 4%;
         }
-        .dls-divider {
+        .cs-slide-text {
+          flex: 1;
+          font-size: 90%;
+          font-weight: 500;
+        }
+        .cs-slide-div {
           height: 2px;
           background-color: #262626;
           width: 100%;
