@@ -168,6 +168,8 @@ if (import.meta.env.DEV) {
 								: slide.background;
 							slideElement.style.background = backgroundValue;
 							slideElement.style.backgroundSize = "cover";
+							slideElement.style.backgroundPosition = "center";
+							slideElement.style.backgroundRepeat = "no-repeat";
 						}
 					}
 				}
