@@ -15,7 +15,7 @@
 				"footer": "Ms. Lee Soo-jin"
 			},
 			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
-			"background": "/images/intro-bg.png"
+			"background": "https://i.ibb.co/MDpwtB2R/intro-bg.png"
 		},
 		{
 			"type": "canva_objective",
@@ -28,7 +28,7 @@
 				]
 			},
 			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
-			"background": "/images/content-bg.png"
+			"background": "https://i.ibb.co/XZbqydhC/content-bg.png"
 		},
 		{
 			"type": "canva_picture_with_topic",
@@ -39,7 +39,7 @@
 				"imageUrl": "https://place.dog/300/200?random=1"
 			},
 			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
-			"background": "/images/content-bg.png"
+			"background": "https://i.ibb.co/XZbqydhC/content-bg.png"
 		},
 		{
 			"type": "canva_image_card_content",
@@ -53,7 +53,7 @@
 				"content2": "Please briefly write today's learning content here."
 			},
 			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
-			"background": "/images/content-bg.png"
+			"background": "https://i.ibb.co/XZbqydhC/content-bg.png"
 		},
 		{
 			"type": "canva_keyword_circle",
@@ -75,7 +75,7 @@
 				]
 			},
 			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
-			"background": "/images/content-bg.png"
+			"background": "https://i.ibb.co/XZbqydhC/content-bg.png"
 		},
 		{
 			"type": "canva_content_detail",
@@ -89,7 +89,7 @@
 				]
 			},
 			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
-			"background": "/images/content-bg.png"
+			"background": "https://i.ibb.co/XZbqydhC/content-bg.png"
 		},
 		{
 			"type": "canva_content_summary",
@@ -102,7 +102,48 @@
 				]
 			},
 			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
-			"background": "/images/content-bg.png"
+			"background": "https://i.ibb.co/XZbqydhC/content-bg.png"
+		},
+		{
+			"type": "canva_title_qna",
+			"data": {
+				"title": "Asking the teacher questions you're curious about"
+			},
+			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
+			"background": "https://i.ibb.co/XZbqydhC/content-bg.png"
+		},
+		{
+			"type": "canva_homework_square",
+			"data": {
+				"title": "Homework Instructions",
+				"homeworks": [
+					{
+						"homework": "Homework1",
+						"description": "Please write your homework here"
+					},
+					{
+						"homework": "Homework2",
+						"description": "Please write your homework here"
+					},
+					{
+						"homework": "Homework3",
+						"description": "Please write your homework here"
+					}
+				],
+				"footer": "Please submit it to the teacher by next Friday."
+			},
+			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
+			"background": "https://i.ibb.co/XZbqydhC/content-bg.png"
+		},
+		{
+			"type": "canva_title_end",
+			"data": {
+				"title": "Class is over!",
+				"subtitle": "Everyone studied hard, right?  \nSee you next time!",
+				"footer": "Ms. Lee Soo-jin"
+			},
+			"font": "https://fonts.googleapis.com/css2?family=Alan+Sans:wght@300..900&display=swap",
+			"background": "https://i.ibb.co/XZbqydhC/content-bg.png"
 		},
 		{
 			"type": "title",
